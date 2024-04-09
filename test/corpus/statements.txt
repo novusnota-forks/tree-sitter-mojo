@@ -974,7 +974,7 @@ class D(Sequence[T, U]):
       (function_definition
         (identifier)
         (parameters
-          (identifier))
+          (self_parameter))
         (block
           (return_statement
             (identifier))))))
@@ -991,7 +991,7 @@ class D(Sequence[T, U]):
       (function_definition
         (identifier)
         (parameters
-          (identifier))
+          (self_parameter))
         (block
           (return_statement)))))
   (class_definition

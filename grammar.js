@@ -1,9 +1,8 @@
 /**
- * @file Python grammar for tree-sitter
+ * @file mojo grammar for tree-sitter
  * @author Max Brunsfeld <maxbrunsfeld@gmail.com>
+ * @author Austin Cummings <austin@austincummings.com>
  * @license MIT
- * @see {@link https://docs.python.org/2/reference/grammar.html|Python 2 grammar}
- * @see {@link https://docs.python.org/3/reference/grammar.html|Python 3 grammar}
  */
 
 /* eslint-disable arrow-parens */
@@ -39,7 +38,7 @@ const PREC = {
 const SEMICOLON = ';';
 
 module.exports = grammar({
-  name: 'python',
+  name: 'mojo',
 
   extras: $ => [
     $.comment,
@@ -135,6 +134,8 @@ module.exports = grammar({
       $.nonlocal_statement,
       $.exec_statement,
       $.type_alias_statement,
+      $.var_statement,
+      $.alias_statement,
     ),
 
     import_statement: $ => seq(
@@ -267,6 +268,8 @@ module.exports = grammar({
       $.with_statement,
       $.function_definition,
       $.class_definition,
+      $.struct_definition,
+      $.trait_definition,
       $.decorated_definition,
       $.match_statement,
     ),
@@ -408,10 +411,11 @@ module.exports = grammar({
 
     function_definition: $ => seq(
       optional('async'),
-      'def',
+      choice('def', 'fn'),
       field('name', $.identifier),
       field('type_parameters', optional($.type_parameter)),
       field('parameters', $.parameters),
+      optional('raises'),
       optional(
         seq(
           '->',
@@ -468,6 +472,16 @@ module.exports = grammar({
       $.type,
     )),
 
+    var_statement: $ => seq(
+      'var',
+      $.assignment,
+    ),
+
+    alias_statement: $ => seq(
+      'alias',
+      $.assignment,
+    ),
+
     class_definition: $ => seq(
       'class',
       field('name', $.identifier),
@@ -476,6 +490,24 @@ module.exports = grammar({
       ':',
       field('body', $._suite),
     ),
+
+    struct_definition: $ => seq(
+      'struct',
+      field('name', $.identifier),
+      field('type_parameters', optional($.type_parameter)),
+      field('traits', optional($.argument_list)),
+      ':',
+      field('body', $._suite),
+    ),
+
+    trait_definition: $ => seq(
+      'trait',
+      field('name', $.identifier),
+      //field('type_parameters', optional($.type_parameter)),
+      ':',
+      field('body', $._suite),
+    ),
+
     type_parameter: $ => seq(
       '[',
       commaSep1($.type),
@@ -511,6 +543,7 @@ module.exports = grammar({
       repeat1($.decorator),
       field('definition', choice(
         $.class_definition,
+        $.struct_definition,
         $.function_definition,
       )),
     ),
@@ -576,6 +609,18 @@ module.exports = grammar({
 
     _as_pattern: $ => seq($.case_pattern, 'as', $.identifier),
 
+    mlir_expression: $ => seq(
+      choice(
+        '__mlir_type',
+        '__mlir_attr',
+        '__mlir_op',
+      ),
+      choice(
+        seq('.', $.string),
+        $.primary_expression,
+      ),
+    ),
+
     union_pattern: $ => prec.right(seq($._simple_pattern, repeat1(prec.left(seq('|', $._simple_pattern))))),
 
     _list_pattern: $ => seq(
@@ -635,6 +680,7 @@ module.exports = grammar({
     // Patterns
 
     _parameters: $ => seq(
+      optional(choice('owned', 'borrowed', 'inout')),
       commaSep1($.parameter),
       optional(','),
     ),
@@ -718,6 +764,7 @@ module.exports = grammar({
     ),
 
     expression: $ => choice(
+      $.mlir_expression,
       $.comparison_operator,
       $.not_operator,
       $.boolean_operator,
@@ -907,7 +954,7 @@ module.exports = grammar({
     subscript: $ => prec(PREC.call, seq(
       field('value', $.primary_expression),
       '[',
-      commaSep1(field('subscript', choice($.expression, $.slice))),
+      commaSep1(field('subscript', choice($.expression, $.slice, $.keyword_argument))),
       optional(','),
       ']',
     )),

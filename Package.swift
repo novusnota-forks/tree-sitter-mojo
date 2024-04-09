@@ -2,14 +2,14 @@
 import PackageDescription
 
 let package = Package(
-    name: "TreeSitterPython",
+    name: "TreeSitterMojo",
     platforms: [.macOS(.v10_13), .iOS(.v11)],
     products: [
-        .library(name: "TreeSitterPython", targets: ["TreeSitterPython"]),
+        .library(name: "TreeSitterMojo", targets: ["TreeSitterMojo"]),
     ],
     dependencies: [],
     targets: [
-        .target(name: "TreeSitterPython",
+        .target(name: "TreeSitterMojo",
                 path: ".",
                 exclude: [
                     "Cargo.toml",
@@ -20,18 +20,19 @@ let package = Package(
                     "bindings/node",
                     "bindings/python",
                     "bindings/rust",
-                    "examples",
+                    "prebuilds",
                     "grammar.js",
                     "package.json",
                     "package-lock.json",
                     "pyproject.toml",
                     "setup.py",
                     "test",
-                    "types",
+                    "examples",
                     ".editorconfig",
                     ".github",
                     ".gitignore",
                     ".gitattributes",
+                    ".gitmodules",
                 ],
                 sources: [
                     "src/parser.c",

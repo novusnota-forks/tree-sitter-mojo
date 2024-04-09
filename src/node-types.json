@@ -28,6 +28,14 @@
         "named": true
       },
       {
+        "type": "struct_definition",
+        "named": true
+      },
+      {
+        "type": "trait_definition",
+        "named": true
+      },
+      {
         "type": "try_statement",
         "named": true
       },
@@ -45,6 +53,10 @@
     "type": "_simple_statement",
     "named": true,
     "subtypes": [
+      {
+        "type": "alias_statement",
+        "named": true
+      },
       {
         "type": "assert_statement",
         "named": true
@@ -108,6 +120,10 @@
       {
         "type": "type_alias_statement",
         "named": true
+      },
+      {
+        "type": "var_statement",
+        "named": true
       }
     ]
   },
@@ -133,6 +149,10 @@
       },
       {
         "type": "lambda",
+        "named": true
+      },
+      {
+        "type": "mlir_expression",
         "named": true
       },
       {
@@ -326,6 +346,21 @@
         "named": true
       }
     ]
+  },
+  {
+    "type": "alias_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "assignment",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "aliased_import",
@@ -1175,6 +1210,10 @@
           },
           {
             "type": "function_definition",
+            "named": true
+          },
+          {
+            "type": "struct_definition",
             "named": true
           }
         ]
@@ -2406,6 +2445,21 @@
     }
   },
   {
+    "type": "mlir_expression",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "primary_expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "module",
     "named": true,
     "fields": {},
@@ -2836,6 +2890,52 @@
     }
   },
   {
+    "type": "struct_definition",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "block",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "traits": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "argument_list",
+            "named": true
+          }
+        ]
+      },
+      "type_parameters": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "type_parameter",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "subscript",
     "named": true,
     "fields": {
@@ -2845,6 +2945,10 @@
         "types": [
           {
             "type": "expression",
+            "named": true
+          },
+          {
+            "type": "keyword_argument",
             "named": true
           },
           {
@@ -2859,6 +2963,32 @@
         "types": [
           {
             "type": "primary_expression",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "trait_definition",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "block",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
             "named": true
           }
         ]
@@ -3205,6 +3335,21 @@
     }
   },
   {
+    "type": "var_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "assignment",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "while_statement",
     "named": true,
     "fields": {
@@ -3498,6 +3643,22 @@
     "named": false
   },
   {
+    "type": "__mlir_attr",
+    "named": false
+  },
+  {
+    "type": "__mlir_op",
+    "named": false
+  },
+  {
+    "type": "__mlir_type",
+    "named": false
+  },
+  {
+    "type": "alias",
+    "named": false
+  },
+  {
     "type": "and",
     "named": false
   },
@@ -3515,6 +3676,10 @@
   },
   {
     "type": "await",
+    "named": false
+  },
+  {
+    "type": "borrowed",
     "named": false
   },
   {
@@ -3590,6 +3755,10 @@
     "named": true
   },
   {
+    "type": "fn",
+    "named": false
+  },
+  {
     "type": "for",
     "named": false
   },
@@ -3615,6 +3784,10 @@
   },
   {
     "type": "in",
+    "named": false
+  },
+  {
+    "type": "inout",
     "named": false
   },
   {
@@ -3662,6 +3835,10 @@
     "named": false
   },
   {
+    "type": "owned",
+    "named": false
+  },
+  {
     "type": "pass",
     "named": false
   },
@@ -3671,6 +3848,10 @@
   },
   {
     "type": "raise",
+    "named": false
+  },
+  {
+    "type": "raises",
     "named": false
   },
   {
@@ -3684,6 +3865,14 @@
   {
     "type": "string_start",
     "named": true
+  },
+  {
+    "type": "struct",
+    "named": false
+  },
+  {
+    "type": "trait",
+    "named": false
   },
   {
     "type": "true",
@@ -3700,6 +3889,10 @@
   {
     "type": "type_conversion",
     "named": true
+  },
+  {
+    "type": "var",
+    "named": false
   },
   {
     "type": "while",

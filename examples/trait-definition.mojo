@@ -1,0 +1,9 @@
+trait MyTrait:
+    fn test(self):
+        ...
+
+    fn other(self):
+        ...
+
+    def test1(self):
+        ...

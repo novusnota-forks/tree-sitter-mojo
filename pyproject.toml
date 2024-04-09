@@ -3,24 +3,23 @@ requires = ["setuptools>=42", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "tree-sitter-python"
-description = "Python grammar for tree-sitter"
-version = "0.21.0"
-keywords = ["parsing", "incremental", "python"]
+name = "tree-sitter-mojo"
+description = "Mojo grammar for tree-sitter"
+version = "0.0.1"
+keywords = ["incremental", "parsing", "tree-sitter", "mojo"]
 classifiers = [
-  "Development Status :: 4 - Beta",
   "Intended Audience :: Developers",
   "License :: OSI Approved :: MIT License",
   "Topic :: Software Development :: Compilers",
   "Topic :: Text Processing :: Linguistic",
-]
-authors = [
-  {name = "Max Brunsfeld"},
-  {name = "Amaan Qureshi"}
+  "Typing :: Typed"
 ]
 requires-python = ">=3.8"
 license.text = "MIT"
 readme = "README.md"
+
+[project.urls]
+Homepage = "https://github.com/tree-sitter/tree-sitter-mojo"
 
 [project.optional-dependencies]
 core = ["tree-sitter~=0.21"]
