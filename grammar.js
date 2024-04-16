@@ -504,6 +504,7 @@ module.exports = grammar({
       'trait',
       field('name', $.identifier),
       //field('type_parameters', optional($.type_parameter)),
+      field('superclasses', optional($.argument_list)),
       ':',
       field('body', $._suite),
     ),

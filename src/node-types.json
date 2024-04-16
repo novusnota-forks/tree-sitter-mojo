@@ -2992,6 +2992,16 @@
             "named": true
           }
         ]
+      },
+      "superclasses": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "argument_list",
+            "named": true
+          }
+        ]
       }
     }
   },
